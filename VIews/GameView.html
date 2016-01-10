@@ -1,0 +1,13 @@
+<div class="container">
+    <ul>
+        <li ng-repeat="album in albums"> {{album}}</li>
+    </ul>
+    Artist Name: <input type="text" data-ng-model="guessed"/>
+    <br/>
+    <div>Current artist: {{ artistName }}</div>
+    <button ng-click="submitAnswer()">Send</button>
+
+    <a href="#GameOver">GameOver</a>
+
+    <img ng-src = "{{ pic }}" height="80" width="80" ng-show="true">
+</div>
