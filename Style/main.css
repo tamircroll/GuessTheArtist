@@ -57,6 +57,7 @@ h5{
     font-family:fantasy;
 }
 
+
 .hints {
     font-size: larger;
     background: orange;
@@ -64,6 +65,10 @@ h5{
     padding: 5px;
     padding-bottom: 5px;
     margin-bottom: 5px;
+}
+
+.totalPonits{
+    font-size: larger;
 }
 
 .sendBtn {

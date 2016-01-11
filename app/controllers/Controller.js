@@ -5,6 +5,7 @@ function GameController($scope, $http, $location, GameFactory) {
     $scope.showPic = false;
     $scope.picSrc = "";
     $scope.TotalPoints = TotalPoints;
+    $scope.Round = roundsCount;
 
     initGame();
 
@@ -27,6 +28,7 @@ function GameController($scope, $http, $location, GameFactory) {
         currRoundPoints = maxRoundPoints;
         roundsCount = 0;
         TotalPoints = 0;
+
         initRound();
     }
 
@@ -37,6 +39,7 @@ function GameController($scope, $http, $location, GameFactory) {
     function handleWrongAnswer() {
         guessesCount++;
         if (guessesCount == maxGuesses) {
+            currRoundPoints = 0;
             endOfRound();
         } else {
             currRoundPoints -= pointsToReduceEachTurn;
@@ -56,6 +59,7 @@ function GameController($scope, $http, $location, GameFactory) {
         $scope.showPic = false;
         $scope.guessed = "";
         $scope.albums = [];
+        $scope.Round = roundsCount + 1;
         setCurrArtist();
         setCurrAlbums();
         guessesCount = 0;
@@ -73,6 +77,7 @@ function GameController($scope, $http, $location, GameFactory) {
     function endOfRound() {
         $scope.loading = true;
         TotalPoints += currRoundPoints;
+        $scope.TotalPoints = TotalPoints;
         roundsCount++;
         currArtist = $scope.artists[roundsCount];
         $scope.artistName = currArtist;
