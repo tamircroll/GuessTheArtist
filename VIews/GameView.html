@@ -1,13 +1,21 @@
 <div class="container mainDiv" >
-    <br/>
-    <h3 class="">Guess The Artist</h3>
+    <h5><br/></h5>
+    <h3 class="centered">Guess The Artist</h3>
+    <h5><br/></h5>
     <div class="row mainDiv" ng-keyup="$event.keyCode == 13 && submitAnswer()">
-        <div class="eight columns row">
+        <div class="eight columns row rightDiv">
             <div class="one columns">
                 <h5><br/></h5>
             </div>
             <div class="eleven columns">
-                <h5>Round: {{Round}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Points: {{TotalPoints}}</h5>
+                <div class="row">
+                    <div class="six columns">
+                        <h5>Round: {{Round}}</h5>
+                    </div>
+                    <div class="six columns">
+                        <h5 class="floatLeft">Points: {{TotalPoints}}</h5>
+                    </div>
+                </div>
                 <ul class="">
                     <div class="hints" ng-repeat="album in albums track by $index">{{album.idx}}. {{album.name}}</div>
                 </ul>

@@ -60,6 +60,8 @@ function GameController($scope, $http, $location, GameFactory) {
         $scope.guessed = "";
         $scope.albums = [];
         $scope.Round = roundsCount + 1;
+        $scope.wrong = false;
+        $scope.correct = false;
         setCurrArtist();
         setCurrAlbums();
         guessesCount = 0;
