@@ -19,6 +19,7 @@
                 <ul class="">
                     <div class="hints" ng-repeat="album in albums track by $index">{{album.idx}}. {{album.name}}</div>
                 </ul>
+                <div class="gesture" data-ng-model="gesture">{{gesture}}</div>
             </div>
         </div>
         <div class="four columns">
@@ -26,7 +27,7 @@
                 <div class="nine columns rightDiv">
                     <h5 class="artistName">Artist Name: </h5>
                     <input type="text" data-ng-model="guessed" class ="textField"/>
-                    <div class="row centered">
+                    <div class="row">
                         <div class="three columns" ng-show="showPic">
                             Hint:
                         </div>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="three columns">
                     <h5><br/></h5>
-                    <button class="sendBtn button-primary btn" id="submitBtn" ng-click="submitAnswer()" ng-disabled="loading">Send</button>
+                    <button class="sendBtn button-primary btn" id="submitBtn" ng-click="submitAnswer()" ng-disabled="loading">{{ButtonText}}</button>
                 </div>
             </div>
         </div>

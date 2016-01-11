@@ -6,6 +6,9 @@ function GameController($scope, $http, $location, GameFactory) {
     $scope.picSrc = "";
     $scope.TotalPoints = TotalPoints;
     $scope.Round = roundsCount;
+    $scope.gesture = "";
+    $scope.showingAnswer = false;
+    $scope.ButtonText = "Send";
 
     initGame();
 
@@ -15,6 +18,7 @@ function GameController($scope, $http, $location, GameFactory) {
     };
 
     $scope.submitAnswer = function () {
+        if($scope.showingAnswer) endOfRound();
         if ($scope.guessed == null || $scope.guessed == "") return;
         if ($scope.guessed.toLowerCase() == currArtist.toLowerCase()) {
             handleCorrectAnswer();
@@ -40,8 +44,11 @@ function GameController($scope, $http, $location, GameFactory) {
         guessesCount++;
         if (guessesCount == maxGuesses) {
             currRoundPoints = 0;
-            endOfRound();
+            $scope.gesture = "Wrong answer, The Artist is: " + currArtist;
+            $scope.ButtonText = "Continue";
+            $scope.showingAnswer = true;
         } else {
+            $scope.gesture = "Wrong answer, Try Again.";
             currRoundPoints -= pointsToReduceEachTurn;
             setNextAlbum();
             if (guessesCount == maxGuesses - 1)
@@ -62,6 +69,9 @@ function GameController($scope, $http, $location, GameFactory) {
         $scope.Round = roundsCount + 1;
         $scope.wrong = false;
         $scope.correct = false;
+        $scope.showingAnswer = false;
+        $scope.ButtonText = "Send";
+        $scope.gesture = "";
         setCurrArtist();
         setCurrAlbums();
         guessesCount = 0;
