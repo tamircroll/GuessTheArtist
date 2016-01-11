@@ -68,16 +68,4 @@ guessTheArtist.factory('GameFactory', function($http) {
             return data.results[0].artistId;
         })
     }
-
-    function extractAlbumsAndPics(jsonDatas){
-        var albums = [];
-        for(data in jsonDatas) {
-            if(data.wrapperType == "collection") {
-                alert(jsonDatas[data].collectionName);
-                albums.push({name: jsonDatas[data].collectionName, art: jsonDatas[data].artworkUrl100});
-
-            }
-        }
-        return albums;
-    }
 });

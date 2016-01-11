@@ -105,7 +105,6 @@ function GameController($scope, $http, $location, GameFactory) {
         rndAlbum.idx = guessesCount + 1;
         $scope.picSrc = rndAlbum.art;
         $scope.albums.push(rndAlbum);
-
     }
 
     function addAllAlbumsToList(datas) {
