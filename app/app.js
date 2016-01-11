@@ -33,7 +33,7 @@ function config($routeProvider) {
 
 function addAlbumToList(data){
     if(data.wrapperType == "collection") {
-        allCurrAlbums.push({name: data.collectionName, art: data.artworkUrl60});
+        allCurrAlbums.push({name: data.collectionName, art: data.artworkUrl100});
     }
 }
 

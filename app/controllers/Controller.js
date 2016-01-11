@@ -52,7 +52,9 @@ function GameController($scope, $http, $location, GameFactory) {
     }
 
     function initRound() {
+        $scope.index = 1;
         $scope.showPic = false;
+        $scope.guessed = "";
         $scope.albums = [];
         setCurrArtist();
         setCurrAlbums();
@@ -100,6 +102,7 @@ function GameController($scope, $http, $location, GameFactory) {
 
     function setNextAlbum() {
         rndAlbum = randomAlbum();
+        rndAlbum.idx = guessesCount + 1;
         $scope.picSrc = rndAlbum.art;
         $scope.albums.push(rndAlbum);
 

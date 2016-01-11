@@ -74,8 +74,7 @@ guessTheArtist.factory('GameFactory', function($http) {
         for(data in jsonDatas) {
             if(data.wrapperType == "collection") {
                 alert(jsonDatas[data].collectionName);
-                albums.push({name: jsonDatas[data].collectionName, art: jsonDatas[data].artworkUrl60});
-                console.log("artist: " + artistName + "album link: " + jsonDatas[data].artworkUrl60 );
+                albums.push({name: jsonDatas[data].collectionName, art: jsonDatas[data].artworkUrl100});
 
             }
         }

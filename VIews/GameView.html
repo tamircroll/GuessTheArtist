@@ -1,15 +1,37 @@
-<div class="container row" >
-    <div class="col-xs-6">
-        <ul >
-            <li class="list-unstyled table-bordered" ng-repeat="album in albums track by $index"> {{album.name}}</li>
-        </ul>
-    </div>
-    <div class="col-xs-6">
-        Artist Name: <input type="text" data-ng-model="guessed"/>
-        <br/>
-        <div>Current artist: {{ artistName }}</div>
-        <button class="btn btn-default" ng-click="submitAnswer()" ng-disabled="loading">Send</button>
-
-        <img ng-src = "{{picSrc}}" height="80" width="80" ng-show="showPic">
+<div class="container mainDiv" >
+    <br/>
+    <h3 class="">Guess The Artist</h3>
+    <div class="row mainDiv">
+        <div class="eight columns row">
+            <div class="one columns">
+                <h5><br/></h5>
+            </div>
+            <div class="eleven columns">
+                <h5>Round: {{Round}}</h5>
+                <ul class="">
+                    <div class="hints" ng-repeat="album in albums track by $index">{{album.idx}}. {{album.name}}</div>
+                </ul>
+            </div>
+        </div>
+        <div class="four columns">
+            <div class = "row">
+                <div class="nine columns rightDiv">
+                    <h5 class="artistName">Artist Name: </h5>
+                    <input type="text" data-ng-model="guessed" class ="textField"/>
+                    <div class="row centered">
+                        <div class="three columns" ng-show="showPic">
+                            Hint:
+                        </div>
+                        <div class="eight columns">
+                            <img ng-src = "{{picSrc}}" ng-show="showPic" class="art"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="three columns">
+                    <h5><br/></h5>
+                    <button class="sendBtn button-primary btn" id="submitBtn" ng-click="submitAnswer()"  ng-disabled="loading">Send</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
