@@ -1,13 +1,15 @@
-<div class="container">
-    <ul>
-        <li ng-repeat="album in albums"> {{album}}</li>
-    </ul>
-    Artist Name: <input type="text" data-ng-model="guessed"/>
-    <br/>
-    <div>Current artist: {{ artistName }}</div>
-    <button ng-click="submitAnswer()">Send</button>
+<div class="container row" >
+    <div class="col-xs-6">
+        <ul >
+            <li class="list-unstyled table-bordered" ng-repeat="album in albums track by $index"> {{album.name}}</li>
+        </ul>
+    </div>
+    <div class="col-xs-6">
+        Artist Name: <input type="text" data-ng-model="guessed"/>
+        <br/>
+        <div>Current artist: {{ artistName }}</div>
+        <button class="btn btn-default" ng-click="submitAnswer()" ng-disabled="loading">Send</button>
 
-    <a href="#GameOver">GameOver</a>
-
-    <img ng-src = "{{ pic }}" height="80" width="80" ng-show="true">
+        <img ng-src = "{{picSrc}}" height="80" width="80" ng-show="showPic">
+    </div>
 </div>

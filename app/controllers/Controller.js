@@ -1,12 +1,14 @@
 function GameController($scope, $http, $location, GameFactory) {
     $scope.artists = [];
     $scope.albums = [];
-    $scope.TotalPoints = 0;
+    $scope.loading = true;
+    $scope.showPic = false;
+    $scope.picSrc = "";
 
     initGame();
 
-    $scope.submitAnswer = function() {
-        if($scope.guessed == null || $scope.guessed == "") return;
+    $scope.submitAnswer = function () {
+        if ($scope.guessed == null || $scope.guessed == "") return;
         if ($scope.guessed.toLowerCase() == currArtist.toLowerCase()) {
             handleCorrectAnswer();
         } else {
@@ -14,7 +16,7 @@ function GameController($scope, $http, $location, GameFactory) {
         }
     };
 
-    $scope.startNewGame = function() {
+    $scope.startNewGame = function () {
         initGame();
         $location.path("/");
     };
@@ -25,11 +27,11 @@ function GameController($scope, $http, $location, GameFactory) {
         currRoundPoints = maxRoundPoints;
         roundsCount = 0;
         guessesCount = 0;
-        $scope.TotalPoints = 0;
+        TotalPoints = 0;
         initRound();
     }
 
-    function handleCorrectAnswer(){
+    function handleCorrectAnswer() {
         endOfRound();
     }
 
@@ -39,67 +41,80 @@ function GameController($scope, $http, $location, GameFactory) {
         if (guessesCount == maxGuesses) {
             endOfRound();
         } else {
-            $scope.albums.push(allCurrAlbums[guessesCount]);
+            setNextAlbum();
+            if(guessesCount == maxGuesses - 1)
+                $scope.showPic = true;
         }
     }
 
-    function setCurrArtist(){
+    function setCurrArtist() {
         currArtist = $scope.artists[roundsCount];
         $scope.artistName = currArtist;
     }
 
-    function initRound(){
+    function initRound() {
+        $scope.showPic = false;
         $scope.albums = [];
         setCurrArtist();
         setCurrAlbums();
         guessesCount = 0;
-        $scope.albums.push(allCurrAlbums[guessesCount]);
         currRoundPoints = maxRoundPoints;
     }
 
-    function endOfRound(){
-        $scope.TotalPoints += currRoundPoints;
+    function setCurrAlbums() {
+        allCurrAlbums = [];
+        GameFactory.getArtistId(currArtist)
+            .then(function (id) {
+                setAlbumsById(id.data.results[0].artistId)
+            });
+    }
+
+    function endOfRound() {
+        $scope.loading = true;
+        TotalPoints += currRoundPoints;
         roundsCount++;
         currArtist = $scope.artists[roundsCount];
         $scope.artistName = currArtist;
-        if(roundsCount == numOfRounds){
+        if (roundsCount == numOfRounds) {
             EndGame();
         }
         initRound();
-
     }
 
     function EndGame() {
-        $scope.TotalPoints += currRoundPoints;
+        TotalPoints += currRoundPoints;
         $location.path("/GameOver");
+        $scope.TotalPoints = TotalPoints;
     }
 
-    function setCurrAlbums(){
-        $http.get("https://itunes.apple.com/lookup?id=909253&entity=album&limit")
-        .success(function (data, status, headers, config)
-        {
-            //allCurrAlbums.push(data);
-            //allCurrAlbums.push(data);
-            //allCurrAlbums.push(data);
-            //allCurrAlbums.push(data);
-            extractAllAlbumNames(data.results);
-
-        });
+    function setAlbumsById(id) {
+        return $http.get("https://itunes.apple.com/lookup?id=" + id + "&entity=album")
+            .success(function (data, status, headers, config) {
+                addAllAlbumsToList(data.results);
+            });
     };
+
+    function doneInitAllAlbubmsArray() {
+        $scope.loading = false;
+        setNextAlbum();
+        }
+
+    function setNextAlbum(){
+        rndAlbum = randomAlbum();
+        $scope.picSrc = rndAlbum.art;
+        $scope.albums.push(rndAlbum);
+
+    }
+
+    function addAllAlbumsToList(datas) {
+        for (data in datas) {
+            addAlbumToList(datas[data]);
+            if (data == datas.length - 1) {
+                doneInitAllAlbubmsArray();
+            }
+        }
+    }
 };
-
-function extractAllAlbumNames(datas){
-    for(data in datas) {
-        extractAlbumName(datas[data]);
-    }
-}
-
-function extractAlbumName(data){
-    allCurrAlbums.push({name: data.collectionName, art: data.artworkUrl60});
-    if(data.wrapperType == "collection") {
-        alert(data.collectionName + " " + data.artworkUrl60);
-    }
-}
 guessTheArtist.controller('GameController', GameController);
 
 

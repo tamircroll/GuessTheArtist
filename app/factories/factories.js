@@ -1,9 +1,9 @@
-guessTheArtist.factory('GameFactory', function($http){
+guessTheArtist.factory('GameFactory', function($http) {
     var allArtists = [
         "The Beatles",
         "The Doors",
         "Led Zeppelin",
-        "Deep purple",
+        "deep purple",
         "Arctic Monkeys",
         "The Beach Boys",
         "Beck",
@@ -24,15 +24,23 @@ guessTheArtist.factory('GameFactory', function($http){
 
     var factory = {};
 
-    factory.getArtists = function(){
+    factory.getArtists = function () {
         return getRandomArtists();
+    };
+
+    factory.getArtistId = function (artist) {
+        return artistId(artist);
+    };
+
+    factory.getAlbums = function (id) {
+        return getAllAlbums(id);
     };
 
     return factory;
 
     function getRandomArtists() {
         var tempList = allArtists.slice();
-        var arraySize = 5;
+        var arraySize = numOfRounds;
         toReturn = [];
 
         for (i = 0; i < numOfRounds; i++) {
@@ -43,5 +51,34 @@ guessTheArtist.factory('GameFactory', function($http){
         }
 
         return toReturn;
+    }
+
+    function getAllAlbums(id) {
+        var url = ArtistDataUrlBase + "lookup?id=" + id + "&entity=album";
+        return $http.get(url)
+            .success(function (data, status, headers, config) {
+                return data.results;
+            });
+    }
+
+    function artistId(artistName) {
+        var url = ArtistDataUrlBase + "search?term=" + artistName + "&limit=1";
+        return $http({method: "GET", url: url})
+            .success(function (data, status, headers, config) {
+            return data.results[0].artistId;
+        })
+    }
+
+    function extractAlbumsAndPics(jsonDatas){
+        var albums = [];
+        for(data in jsonDatas) {
+            if(data.wrapperType == "collection") {
+                alert(jsonDatas[data].collectionName);
+                albums.push({name: jsonDatas[data].collectionName, art: jsonDatas[data].artworkUrl60});
+                console.log("artist: " + artistName + "album link: " + jsonDatas[data].artworkUrl60 );
+
+            }
+        }
+        return albums;
     }
 });
