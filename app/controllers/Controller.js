@@ -4,8 +4,14 @@ function GameController($scope, $http, $location, GameFactory) {
     $scope.loading = true;
     $scope.showPic = false;
     $scope.picSrc = "";
+    $scope.TotalPoints = TotalPoints;
 
     initGame();
+
+    $scope.startNewGame = function () {
+        initGame();
+        $location.path("/");
+    };
 
     $scope.submitAnswer = function () {
         if ($scope.guessed == null || $scope.guessed == "") return;
@@ -16,17 +22,10 @@ function GameController($scope, $http, $location, GameFactory) {
         }
     };
 
-    $scope.startNewGame = function () {
-        initGame();
-        $location.path("/");
-    };
-
     function initGame() {
-        $scope.pic = "http://www.planwallpaper.com/static/images/125146_nature-flowers-1600x1200-wallpaper.jpg";
         $scope.artists = GameFactory.getArtists();
         currRoundPoints = maxRoundPoints;
         roundsCount = 0;
-        guessesCount = 0;
         TotalPoints = 0;
         initRound();
     }
@@ -37,12 +36,12 @@ function GameController($scope, $http, $location, GameFactory) {
 
     function handleWrongAnswer() {
         guessesCount++;
-        currRoundPoints -= pointsToReduceEachTurn;
         if (guessesCount == maxGuesses) {
             endOfRound();
         } else {
+            currRoundPoints -= pointsToReduceEachTurn;
             setNextAlbum();
-            if(guessesCount == maxGuesses - 1)
+            if (guessesCount == maxGuesses - 1)
                 $scope.showPic = true;
         }
     }
@@ -82,9 +81,9 @@ function GameController($scope, $http, $location, GameFactory) {
     }
 
     function EndGame() {
-        TotalPoints += currRoundPoints;
+        console.log(TotalPoints);
+        console.log(currRoundPoints);
         $location.path("/GameOver");
-        $scope.TotalPoints = TotalPoints;
     }
 
     function setAlbumsById(id) {
@@ -97,9 +96,9 @@ function GameController($scope, $http, $location, GameFactory) {
     function doneInitAllAlbubmsArray() {
         $scope.loading = false;
         setNextAlbum();
-        }
+    }
 
-    function setNextAlbum(){
+    function setNextAlbum() {
         rndAlbum = randomAlbum();
         $scope.picSrc = rndAlbum.art;
         $scope.albums.push(rndAlbum);
@@ -114,7 +113,8 @@ function GameController($scope, $http, $location, GameFactory) {
             }
         }
     }
-};
+}
+
 guessTheArtist.controller('GameController', GameController);
 
 
