@@ -12,22 +12,12 @@
     border-radius: 10px;
 }
 
-.artistName{
-    margin-left: 0%;
-    padding-left: 0%;
-    margin-right: 0%;
-    padding-right: 0%;
-    width: 80%;
+@keyframes blinker {
+    50% { opacity: 0.0; }
 }
 
 .rightDiv{
     padding-right: 8px;
-}
-
-
-.listDiv{
-}
-.playDiv{
 }
 
 h5{
@@ -36,7 +26,6 @@ h5{
 }
 
 .mainDiv{
-
     font-family:fantasy;
 }
 
@@ -64,7 +53,7 @@ h5{
 }
 
 .totalPonits{
-    font-size: larger;
+    font-size: xx-large;
 }
 
 ul{

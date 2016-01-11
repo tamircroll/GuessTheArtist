@@ -56,29 +56,12 @@ function GameController($scope, $http, $location, GameFactory) {
         }
     }
 
-    function setCurrArtist() {
+    function setNextArtist() {
         currArtist = $scope.artists[roundsCount];
         $scope.artistName = currArtist;
     }
 
-    function initRound() {
-        $scope.index = 1;
-        $scope.showPic = false;
-        $scope.guessed = "";
-        $scope.albums = [];
-        $scope.Round = roundsCount + 1;
-        $scope.wrong = false;
-        $scope.correct = false;
-        $scope.showingAnswer = false;
-        $scope.ButtonText = "Send";
-        $scope.gesture = "";
-        setCurrArtist();
-        setCurrAlbums();
-        guessesCount = 0;
-        currRoundPoints = maxRoundPoints;
-    }
-
-    function setCurrAlbums() {
+    function setAlbumsToNextArtist() {
         allCurrAlbums = [];
         GameFactory.getArtistId(currArtist)
             .then(function (id) {
@@ -132,6 +115,23 @@ function GameController($scope, $http, $location, GameFactory) {
                 doneInitAllAlbubmsArray();
             }
         }
+    }
+
+    function initRound() {
+        $scope.index = 1;
+        $scope.showPic = false;
+        $scope.guessed = "";
+        $scope.albums = [];
+        $scope.Round = roundsCount + 1;
+        $scope.wrong = false;
+        $scope.correct = false;
+        $scope.showingAnswer = false;
+        $scope.ButtonText = "Send";
+        $scope.gesture = "";
+        setNextArtist();
+        setAlbumsToNextArtist();
+        guessesCount = 0;
+        currRoundPoints = maxRoundPoints;
     }
 }
 
